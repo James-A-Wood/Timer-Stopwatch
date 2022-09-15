@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Happy Timer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="./css/styles.css">
+    <script type="module" src="./js/timer.js" defer></script>
+
+    <!-- PWA Stuff -->
+    <link rel="manifest" href="timer-manifest_1.json">
+    <link rel="shortcut icon" href="images/timer.ico">
+    <link rel="apple-touch-icon" href="images/icon_192.png">
+    <meta name="theme-color" content="#ff0000">
+
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("timer_service_worker.js", {
+                scope: "/timer/"
+            }).then(registration => {
+                // console.log("ServiceWorker registration successful with scope: ", registration.scope);
+                // console.log(registration);
+            }, err => console.log("ServiceWorker registration failed: ", err));
+            navigator.serviceWorker.addEventListener("controllerchange", () => { });
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <div id="progress-bar"></div>
+
+    <div id="top-stuff">
+        <div id="mode-toggler">
+            <div id="countdown-mode-button" class="mode-button" data-mode="countdown">
+                <span>Timer</span>
+            </div>
+            <div id="stopwatch-mode-button" class="mode-button" data-mode="stopwatch">
+                <span>Stopwatch</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="display-holder">
+        <div id="display">
+            <div id="minutes_x10" class="digit-holder">
+                <div class="increment-button up-button" data-seconds="600">+</div>
+                <div class="time-holder">
+                    <div class="digit-frame">0</div>
+                </div>
+                <div class="increment-button down-button" data-seconds="-600">-</div>
+            </div>
+            <div id="minutes_x1" class="digit-holder">
+                <div class="increment-button up-button" data-seconds="60">+</div>
+                <div class="time-holder">
+                    <div class="digit-frame">0</div>
+                </div>
+                <div class="increment-button down-button" data-seconds="-60">-</div>
+            </div>
+            <div class="digit-holder">:</div>
+            <div id="seconds_x10" class="digit-holder">
+                <div class="increment-button up-button" data-seconds="10">+</div>
+                <div class="time-holder">
+                    <div class="digit-frame">0</div>
+                </div>
+                <div class="increment-button down-button" data-seconds="-10">-</div>
+            </div>
+            <div id="seconds_x1" class="digit-holder">
+                <div class="increment-button up-button" data-seconds="1">+</div>
+                <div class="time-holder">
+                    <div class="digit-frame">0</div>
+                </div>
+                <div class="increment-button down-button" data-seconds="-1">-</div>
+            </div>
+            <div id="seconds_10ths" class="sub-seconds digit-holder">
+                <div class="time-holder">
+                    <div class="digit-frame">0</div>
+                </div>
+            </div>
+            <div id="seconds_100ths" class="sub-seconds digit-holder">
+                <div class="time-holder">
+                    <div class="digit-frame">0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="buttons-holder">
+        <div id="start-button" class="control-button">
+            <div class="button-label">Start</div>
+        </div>
+        <div id="clear-button" class="control-button">
+            <div class="button-label">Clear</div>
+            <span class="number-holder"></span>
+        </div>
+    </div>
+
+    <div id="install-stuff">
+        <div class="text-holder">
+            <p>Install this app?<br>インストールしますか？</p>
+        </div>
+        <div id="install-button" class="install-button">Yes</div>
+        <div id="dont-install-button" class="install-button">No thanks</div>
+    </div>
+
+</body>
+
+</html>

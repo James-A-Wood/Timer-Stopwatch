@@ -1,0 +1,242 @@
+html {
+  height: -webkit-fill-available;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 3rem;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  background-color: #faffff;
+  background-size: cover;
+  user-select: none;
+  -webkit-user-select: none;
+  /* Safari */
+  -ms-user-select: none;
+  /* IE 10 and IE 11 */
+  user-select: none;
+  /* Standard syntax */
+  -webkit-tap-highlight-color: transparent;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+body.countdown #countdown-mode-button {
+  opacity: 1;
+}
+body.stopwatch {
+  background-color: #ffefff;
+}
+body.stopwatch .increment-button {
+  transform: scale(0, 0);
+}
+body.stopwatch #stopwatch-mode-button {
+  opacity: 1;
+}
+body.stopwatch #progress-bar {
+  display: none;
+}
+body.is-running .increment-button {
+  transform: scale(0, 0);
+}
+body.is-running #start-button {
+  background-color: #fb647f;
+  transition: all 200ms;
+}
+
+#install-stuff {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: white;
+  color: slateblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  transition: all 400ms ease-out;
+  opacity: 0;
+  pointer-events: none;
+}
+#install-stuff.showing {
+  pointer-events: initial;
+  opacity: 1;
+}
+#install-stuff .text-holder {
+  text-align: center;
+}
+
+#progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #f5ffff, #91ffff);
+}
+
+#top-stuff {
+  display: flex;
+  width: 100%;
+}
+
+#mode-toggler {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  font-size: 10vmin;
+}
+#mode-toggler .mode-button {
+  text-align: center;
+  user-select: none;
+  cursor: pointer;
+  padding: 1rem 1rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 200ms;
+  opacity: 0.1;
+}
+#mode-toggler .mode-button:after {
+  content: "";
+  position: absolute;
+  width: calc(100% - 8px);
+  top: 100%;
+  left: 0;
+  border: 4px solid green;
+  border-radius: 200px;
+  transition: all 200ms;
+}
+
+@keyframes flash {
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.02, 1.02);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+#display-holder {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  font-size: 8rem;
+  animation: fadein 1000ms forwards;
+  width: 100%;
+}
+#display-holder.flashing {
+  animation: flash 0.5s infinite ease-in-out;
+}
+#display-holder #display {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  color: navy;
+}
+#display-holder #display .time-holder {
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+#display-holder #display .time-holder .digit-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+#display-holder #display .digit-holder {
+  position: relative;
+}
+#display-holder #display .digit-holder.sub-seconds {
+  font-size: 50%;
+  opacity: 0.5;
+}
+#display-holder #display #seconds_10ths {
+  margin-left: 0.5rem;
+}
+#display-holder #display .increment-button {
+  user-select: none;
+  cursor: pointer;
+  position: absolute;
+  text-align: center;
+  color: lightblue;
+  transition: all 200ms;
+  width: 100%;
+  font-size: 75%;
+  z-index: 1;
+}
+#display-holder #display .increment-button.up-button {
+  bottom: 70%;
+}
+#display-holder #display .increment-button.down-button {
+  top: 60%;
+}
+
+#buttons-holder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.control-button {
+  flex: 1;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  padding: 0.5rem;
+  background-color: navy;
+  color: white;
+  border: none;
+  font-size: 10vmin;
+}
+
+.number-holder {
+  position: absolute;
+  bottom: 1rem;
+  right: 2rem;
+  font-size: 60%;
+  opacity: 0.6;
+}
+
+#start-button {
+  background-color: #17a69d;
+}
+
+#clear-button {
+  background-color: #4387d0;
+}
+
+@media (orientation: portrait) {
+  .sub-seconds {
+    display: none;
+  }
+}
+@media (max-width: 720px) {
+  .number-holder {
+    bottom: 0.5rem;
+    right: 0.5rem;
+  }
+}/*# sourceMappingURL=styles.css.map */
