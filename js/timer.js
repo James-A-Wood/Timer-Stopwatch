@@ -23,15 +23,12 @@ function ControlButton(id, settings = {}) {
 }
 
 
-const controller = new TimerController(Ticker, Display, ControlButton, {
-    body: document.querySelector("body"),
-});
+const controller = new TimerController(Ticker, Display, ControlButton);
 
 
 function TimerController(Ticker, Display, ControlButton, settings = {}) {
 
-
-    const body = settings.body;
+    const body = document.querySelector("body");
     const ticker = new Ticker();
     const display = new Display("#display");
     const sounds = new Sounds();
@@ -45,7 +42,6 @@ function TimerController(Ticker, Display, ControlButton, settings = {}) {
         clickSound: () => sounds.play("tick"),
     });
 
-
     const maxAllowedMs = settings.maxAllowedMs ?? 1000 * 60 * 99 + 59000; // 99m 59sec
     const minAllowedMs = settings.minAllowedMs ?? 1000; // lowest possible countdown is 1 second (not 0)
     const keyBindings = settings.keyBindings ?? {
@@ -56,10 +52,8 @@ function TimerController(Ticker, Display, ControlButton, settings = {}) {
         "c": ticker.clear,
     };
 
-
     let isRinging = false;
     let countdownFromMs = 0;
-
 
     function setCountdownFrom() {
         countdownFromMs = parseInt(localStorage.countdownFromMs) ?? (10 * 1000);
@@ -67,9 +61,7 @@ function TimerController(Ticker, Display, ControlButton, settings = {}) {
     }
     setCountdownFrom();
 
-
     const timeIsUp = () => countdownFromMs && ticker.elapsedMs > countdownFromMs;
-
 
     display.getCountdownProgress = () => countdownFromMs ? ticker.elapsedMs / countdownFromMs : 0;
     display.getMs = () => {
@@ -78,45 +70,36 @@ function TimerController(Ticker, Display, ControlButton, settings = {}) {
         return ticker.elapsedMs;
     };
 
-
     sounds.addSound("ring", "sounds/alarm.mp3", { loop: true });
     sounds.addSound("tick", "sounds/tick.mp3");
 
-
     ticker.onStateChange = isRunning => {
         startButton.label(ticker.isRunning() ? "Pause" : "Start");
-        // clearButton.subLabel(mode === "countdown" ? display.getTimeAsText(countdownFromMs) : "");
         body.classList.toggle("is-running", isRunning);
         return true;
     };
-
 
     function toggleRunningState() {
         ticker.changeRunningState();
         onAnyButtonPress();
     };
 
-
     function clearTimer() {
         ticker.clear();
         onAnyButtonPress();
     };
 
-
     startButton.onclick(() => isRinging ? clearTimer() : toggleRunningState());
     clearButton.onclick(() => clearTimer());
-
 
     window.addEventListener("keydown", e => {
         onAnyButtonPress();
         if (keyBindings[e.key]) keyBindings[e.key]();
     });
 
-
     document.querySelectorAll(".increment-button").forEach(button => {
         button.onclick = () => incrementButtonHandler(button);
     });
-
 
     function onAnyButtonPress() {
         sounds.stop("ring");
@@ -125,7 +108,6 @@ function TimerController(Ticker, Display, ControlButton, settings = {}) {
         isRinging = false;
     }
 
-
     function incrementButtonHandler(button) {
         onAnyButtonPress();
         ticker.clear();
@@ -133,7 +115,6 @@ function TimerController(Ticker, Display, ControlButton, settings = {}) {
         if (setCountdownMs(ms).timeDidChange) sounds.play("tick");
         if (!isNaN(countdownFromMs)) localStorage.countdownFromMs = countdownFromMs;
     }
-
 
     function setCountdownMs(ms) {
 
@@ -148,7 +129,6 @@ function TimerController(Ticker, Display, ControlButton, settings = {}) {
         };
     }
 
-
     function setMode(newMode = undefined) {
         const mode = newMode ?? localStorage.mode ?? "countdown"; // countdown by default
         localStorage.mode = newMode ?? localStorage.mode ?? "countdown";
@@ -160,17 +140,14 @@ function TimerController(Ticker, Display, ControlButton, settings = {}) {
     };
     setMode();
 
-
     document.querySelectorAll(".mode-button").forEach(button => {
         const mode = button.getAttribute("data-mode");
         button.onclick = () => setMode(mode);
     });
 
-
     function timeUp() {
         return ticker.isRunning() && !isRinging && countdownFromMs && ticker.elapsedMs >= countdownFromMs;
     }
-
 
     function checkForFinishLineCross() {
         window.requestAnimationFrame(checkForFinishLineCross);

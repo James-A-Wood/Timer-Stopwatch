@@ -1,17 +1,13 @@
-
 import '../libraries/howler.js';
 
 
 function Sounds() {
 
-
     const log = console.log;
-
 
     let loadedHowls = {};
     let queued = {};
     let userHasInteracted = false;
-
 
     // adding queued sounds on first user interaction
     const processQueue = () => {
@@ -24,8 +20,7 @@ function Sounds() {
             loadedHowls[name] = new Howl(settings);
             delete queued[name];
         }
-    }
-
+    };
 
     ["keydown", "click", "touch", "tap"].forEach(event => {
         window.addEventListener(event, () => {
@@ -35,18 +30,15 @@ function Sounds() {
         });
     });
 
-
     this.addSound = (name, src, settings = {}) => {
         if (userHasInteracted) return processQueue();
         queued[name] = { src, settings };
     };
 
-
     this.stopAll = () => {
         Howler.stop();
         return this;
-    }
-
+    };
 
     this.play = sound => {
         this.stopAll();
@@ -54,11 +46,10 @@ function Sounds() {
         return this;
     };
 
-
     this.stop = sound => {
         if (loadedHowls[sound]) loadedHowls[sound].stop();
         return this;
-    }
+    };
 }
 
 

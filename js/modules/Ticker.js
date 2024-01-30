@@ -3,14 +3,12 @@ const log = console.log;
 
 function Ticker() {
 
-
     let t1 = Date.now();
     let isRunning = false;
     this.elapsedMs = 0;
     this.countdownFrom = undefined;
     this.displayMs = 0;
     this.eachMs = () => undefined;
-
 
     setInterval(() => {
         const t2 = Date.now();
@@ -21,12 +19,10 @@ function Ticker() {
         this.eachMs();
     }, 1);
 
-
     const timeIsUp = () => this.countdownFrom && this.displayMs <= 0;
 
     this.onTimeUp = () => undefined;
     this.onStateChange = () => undefined;
-
 
     this.changeRunningState = val => {
         isRunning = val ?? !isRunning;
@@ -34,9 +30,7 @@ function Ticker() {
         return this;
     };
 
-
     this.isRunning = () => isRunning;
-
 
     this.clear = () => {
         this.changeRunningState(false);

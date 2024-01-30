@@ -19,7 +19,7 @@ function Display(id, obj = {}) {
 
     fitInParent(display, {
         maxWidthFill: 0.9,
-        maxHeightFill: 0.5, // allowing room the position: absolute; incrementing icons above and below
+        maxHeightFill: 0.7, // allowing room the +/- buttons, which are position: absolute;
     });
 
     const formatTime = ms => {
